@@ -6,10 +6,9 @@ function Navbar({ user, onLogout }) {
   
   const navItems = [
     { path: '/', label: 'Dashboard', icon: '📊' },
-    { path: '/assistant', label: 'AI Assistant', icon: '🤖' },
+    { path: '/virtual-twin', label: 'Virtual Twin', icon: '🤖' },
     { path: '/analytics', label: 'Analytics', icon: '📈' },
-    { path: '/notifications', label: 'Notifications', icon: '🔔' },
-    { path: '/feedback', label: 'Feedback', icon: '💬' },
+    { path: '/virtual-card', label: 'Virtual Card', icon: '💳' },
   ];
 
   return (

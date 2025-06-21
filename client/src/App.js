@@ -5,10 +5,9 @@ import io from 'socket.io-client';
 
 import Login from './components/Login';
 import Dashboard from './components/Dashboard';
-import Assistant from './components/Assistant';
+import VirtualTwin from './components/VirtualTwin';
 import Analytics from './components/Analytics';
-import Notifications from './components/Notifications';
-import Feedback from './components/Feedback';
+import VirtualCard from './components/VirtualCard';
 import Navbar from './components/Navbar';
 
 function App() {
@@ -28,7 +27,7 @@ function App() {
 
   useEffect(() => {
     if (user) {
-      const newSocket = io('http://localhost:5000');
+      const newSocket = io('http://localhost:5001');
       newSocket.emit('join_user', user.id);
       setSocket(newSocket);
       
@@ -95,10 +94,9 @@ function App() {
         <main className="container mx-auto px-4 py-8">
           <Routes>
             <Route path="/" element={<Dashboard user={user} />} />
-            <Route path="/assistant" element={<Assistant socket={socket} />} />
+            <Route path="/virtual-twin" element={<VirtualTwin socket={socket} />} />
             <Route path="/analytics" element={<Analytics />} />
-            <Route path="/notifications" element={<Notifications socket={socket} />} />
-            <Route path="/feedback" element={<Feedback />} />
+            <Route path="/virtual-card" element={<VirtualCard />} />
             <Route path="*" element={<Navigate to="/" />} />
           </Routes>
         </main>
