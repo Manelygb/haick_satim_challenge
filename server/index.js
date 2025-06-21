@@ -8,21 +8,20 @@ require('dotenv').config();
 const authRoutes = require('./routes/auth');
 const assistantRoutes = require('./routes/assistant');
 const analyticsRoutes = require('./routes/analytics');
-const notificationsRoutes = require('./routes/notifications');
-const feedbackRoutes = require('./routes/feedback');
 
 const app = express();
 const server = http.createServer(app);
+const CLIENT_PORT = process.env.CLIENT_PORT || 3001;
 const io = socketIo(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: `http://localhost:${CLIENT_PORT}`,
     methods: ["GET", "POST"]
   }
 });
 
 // Middleware
 app.use(helmet());
-app.use(cors());
+app.use(cors({ origin: `http://localhost:${CLIENT_PORT}` }));
 app.use(express.json());
 
 // Make io available to routes
@@ -32,8 +31,6 @@ app.set('io', io);
 app.use('/api/auth', authRoutes);
 app.use('/api/assistant', assistantRoutes);
 app.use('/api/analytics', analyticsRoutes);
-app.use('/api/notifications', notificationsRoutes);
-app.use('/api/feedback', feedbackRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
@@ -54,9 +51,9 @@ io.on('connection', (socket) => {
   });
 });
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 server.listen(PORT, () => {
   console.log(`🚀 SATIM API Server running on port ${PORT}`);
-  console.log(`📊 Dashboard: http://localhost:3000`);
+  console.log(`📊 Dashboard: http://localhost:${CLIENT_PORT}`);
 });
